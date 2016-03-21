@@ -1,0 +1,30 @@
+{
+  "name": "node.mongo",
+  "version": "1.0.0",
+  "description": "node mongo library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/yeliex/node.mongo.git"
+  },
+  "keywords": [
+    "node",
+    "mongo"
+  ],
+  "author": {
+    "name": "yeliex",
+    "email": "yeliex@yeliex.com",
+    "url": "http://yeliex.wang"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yeliex/node.mongo/issues"
+  },
+  "homepage": "https://github.com/yeliex/node.mongo#readme",
+  "dependencies": {
+    "mongodb": "^2.1.7"
+  }
+}
