@@ -26,9 +26,13 @@ var mongo = require("mongodb").MongoClient;
             var collection = yield this.collection(collectionName);
             return collection.insert(data);
         };
-        this.find = function *(collectionName, filter, condition) {
+        this.find = function *(collectionName, filter, condition, cursor) {
             var collection = yield this.collection(collectionName);
-            return collection.find(filter, condition).toArray();
+            if (!cursor) {
+                return collection.find(filter, condition).toArray();
+            } else {
+                return collection.find(filter, condition);
+            }
         };
         this.findOne = function *(collectionName, filter) {
             var collection = yield this.collection(collectionName);

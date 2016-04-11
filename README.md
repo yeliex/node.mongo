@@ -35,7 +35,8 @@ var query = yield mongo.findOne("test",{});
     - *insert a series of new item*
 - updateOne(collection,filter,data)
     - *upsert a new item*
-- find(collection,filter,condition)
-    - *return a group of items (array)*
+- find(collection,filter,condition,cursor)
+    - *return a group of items (array) (cursor = false)*
+    - *return a MongoCursor object (object) (cursor = true)*
 - findOne(collectionName, filter)
     - *return first item accord with filter*
