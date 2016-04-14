@@ -3,8 +3,8 @@
  * Description: yeliex 异步转同步mongo连接类
  */
 
-var mongo = require("mongodb").MongoClient;
 (function () {
+    var mongo = require("mongodb").MongoClient;
     module.exports = function (url, options) {
         // 首先建立连接
         var connect = mongo.connect(url, options);
