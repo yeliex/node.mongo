@@ -1,12 +1,13 @@
 /**
  * Creator: yeliex <yeliex@yeliex.com>
- * Description: yeliex 异步转同步mongo连接类
+ * Description: 异步转同步mongo连接类
  */
-
+var mongo = require("mongodb").MongoClient;
 (function () {
-    var mongo = require("mongodb").MongoClient;
-    module.exports = function (url, options) {
+    const Mongo = function (url, options) {
         // 首先建立连接
+        options = options || {};
+        options.autoReconnect = true;
         var connect = mongo.connect(url, options);
         this.collections = function *() {
             return yield connect.then(function (db) {
@@ -43,5 +44,9 @@
             return collection.updateOne(filter, data, {upsert: true});
         };
         return this;
+    };
+
+    module.exports = function (url, options) {
+        return (new Mongo(url, options));
     }
 }());
