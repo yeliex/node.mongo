@@ -38,5 +38,7 @@ var query = yield mongo.findOne("test",{});
 - find(collection,filter,condition,cursor)
     - *return a group of items (array) (cursor = false)*
     - *return a MongoCursor object (object) (cursor = true)*
-- findOne(collectionName, filter)
+- findOne(collectionName,filter)
     - *return first item accord with filter*
+- femove(collectionName,filter,option)
+    - *remove any numbers of document
