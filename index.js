@@ -19,9 +19,9 @@ var mongo = require("mongodb").MongoClient;
                 return db.collection(collectionName);
             });
         };
-        this.count = function *(collectionName) {
+        this.count = function *(collectionName, query, options) {
             var collection = yield this.collection(collectionName);
-            return collection.count();
+            return collection.count(query, options);
         };
         this.insert = function *(collectionName, data) {
             var collection = yield this.collection(collectionName);

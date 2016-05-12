@@ -29,7 +29,7 @@ var query = yield mongo.findOne("test",{});
     - *return all collections in db*
 - collection(name)
     - *return specified  collection (for other methods not defined)*
-- count(collection)
+- count(collection,query,options)
     - *return number of result in specified collection*
 - insert(collection,data)
     - *insert a series of new item*
