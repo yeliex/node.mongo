@@ -41,4 +41,15 @@ var query = yield mongo.findOne("test",{});
 - findOne(collectionName,filter)
     - *return first item accord with filter*
 - femove(collectionName,filter,option)
-    - *remove any numbers of document
+    - *remove any numbers of document*
+- aggregate(collectionName,pipeline, options)
+    - *Execute an aggregation framework pipeline against the collection*
+    - ```mongo.aggregate("collection",{id:"$id"})```<br>
+     =<br>
+     ```db.collection.aggregate([{$group:{_id:{id:"$id"}}}])```<br>
+     Result:
+        ```
+        { "_id" : { "id" : "1" } }
+        { "_id" : { "id" : "2" } }
+        { "_id" : { "id" : "3" } }
+        ```

@@ -47,6 +47,10 @@ var mongo = require("mongodb").MongoClient;
             var collection = yield this.collection(collectionName);
             return collection.deleteMany(filter, options);
         };
+        this.aggregate = function *(collectionName, pipeline, options) {
+            var collection = yield this.collection(collectionName);
+            return collection.aggregate([{$group: {_id: pipeline}}], options);
+        };
         return this;
     };
 
