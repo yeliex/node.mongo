@@ -49,7 +49,15 @@ var mongo = require("mongodb").MongoClient;
         };
         this.aggregate = function *(collectionName, pipeline, options) {
             var collection = yield this.collection(collectionName);
-            return collection.aggregate([{$group: {_id: pipeline}}], options);
+            return new Promise(function (rec, rej) {
+                collection.aggregate(pipeline, function (err, res) {
+                    if (err) {
+                        rej(err);
+                    } else {
+                        rec(res);
+                    }
+                });
+            });
         };
         return this;
     };
