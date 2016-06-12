@@ -33,6 +33,8 @@ var query = yield mongo.findOne("test",{});
     - *return number of result in specified collection*
 - insert(collection,data)
     - *insert a series of new item*
+- update(collection,filter,data)
+    - *upsert many items*
 - updateOne(collection,filter,data)
     - *upsert a new item*
 - find(collection,filter,condition,cursor)

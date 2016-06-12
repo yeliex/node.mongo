@@ -39,6 +39,10 @@ var mongo = require("mongodb").MongoClient;
             var collection = yield this.collection(collectionName);
             return collection.findOne(filter);
         };
+        this.update = function *(collectionName, filter, data) {
+            var collection = yield this.collection(collectionName);
+            return collection.update(filter, data, {upsert: true});
+        };
         this.updateOne = function *(collectionName, filter, data) {
             var collection = yield this.collection(collectionName);
             return collection.updateOne(filter, data, {upsert: true});
