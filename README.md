@@ -33,10 +33,10 @@ var query = yield mongo.findOne("test",{});
     - *return number of result in specified collection*
 - insert(collection,data)
     - *insert a series of new item*
-- update(collection,filter,data)
+- update(collection,filter,data,options)
     - *upsert many items*
-- updateOne(collection,filter,data)
-    - *upsert a new item*
+- updateOne(collection,filter,data,options)
+    - *upsert a new item (auto upsert)*
 - find(collection,filter,condition,cursor)
     - *return a group of items (array) (cursor = false)*
     - *return a MongoCursor object (object) (cursor = true)*
