@@ -35,9 +35,9 @@ var mongo = require("mongodb").MongoClient;
                 return collection.find(filter, condition);
             }
         };
-        this.findOne = function *(collectionName, filter) {
+        this.findOne = function *(collectionName, filter, condition) {
             var collection = yield this.collection(collectionName);
-            return collection.findOne(filter);
+            return collection.findOne(filter, condition);
         };
         this.update = function *(collectionName, filter, data, options) {
             var collection = yield this.collection(collectionName);
