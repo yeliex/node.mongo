@@ -4,7 +4,8 @@
  */
 const mongo = require("mongodb").MongoClient;
 (() => {
-  const Mongo = (url, options) => {
+  //constructor cannot be arrow function
+  const Mongo = function (url, options) {
     // 首先建立连接
     options = options || {};
     options.autoReconnect = true;
