@@ -9,18 +9,24 @@ node mongo library
 $ npm install node.mongo
 ```
 
+## Async support @next
+```
+$ npm install node.mongo@next
+```
+see `last` branch for the `yield` version;
+
 ## Usage
 ```js
-var mongo = require("node.mongo")(url,options);
+const mongo = require("node.mongo")(url, options);
 
-var res = yeild mongo.findOne(collection,condition);
-````
+const res = await mongo.findOne(collection,condition);
+```
 
 ## Example
 ```js
-var mongo = require("node.mongo")("mongodb://localhost/test");
+const mongo = require("node.mongo")("mongodb://localhost/test");
 
-var query = yield mongo.findOne("test",{});
+const query = await mongo.findOne("test",{});
 ```
 
 ## API Methods
