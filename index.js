@@ -10,57 +10,65 @@ const mongo = require("mongodb").MongoClient;
     options = options || {};
     options.autoReconnect = true;
     const connect = mongo.connect(url, options);
-    this.collections = async() => {
-      return await connect.then((db) => {
+    this.collections = () => {
+      return connect.then((db) => {
         return db.collections();
       });
     };
-    this.collection = async(collectionName) => {
+    this.collection = (collectionName) => {
       return connect.then((db) => {
         return db.collection(collectionName);
       });
     };
-    this.count = async(collectionName, query, options) => {
-      const collection = await this.collection(collectionName);
-      return collection.count(query, options);
+    this.count = (collectionName, query, options) => {
+      return this.collection(collectionName).then((collection) => {
+        return collection.count(query, options);
+      });
     };
-    this.insert = async(collectionName, data) => {
-      const collection = await this.collection(collectionName);
-      return collection.insert(data);
+    this.insert = (collectionName, data) => {
+      return this.collection(collectionName).then((collection) => {
+        return collection.insert(data);
+      });
     };
-    this.find = async(collectionName, filter, condition, cursor) => {
-      const collection = await this.collection(collectionName);
-      if (!cursor) {
-        return collection.find(filter, condition).toArray();
-      } else {
-        return collection.find(filter, condition);
-      }
+    this.find = (collectionName, filter, condition, cursor) => {
+      return this.collection(collectionName).then((collection) => {
+        if (!cursor) {
+          return collection.find(filter, condition).toArray();
+        } else {
+          return collection.find(filter, condition);
+        }
+      });
     };
-    this.findOne = async(collectionName, filter, condition) => {
-      const collection = await this.collection(collectionName);
-      return collection.findOne(filter, condition);
+    this.findOne = (collectionName, filter, condition) => {
+      return this.collection(collectionName).then((collection) => {
+        return collection.findOne(filter, condition);
+      });
     };
-    this.update = async(collectionName, filter, data, options) => {
-      const collection = await this.collection(collectionName);
-      return collection.update(filter, data, Object.assign({}, { upsert: false }, options));
+    this.update = (collectionName, filter, data, options) => {
+      return this.collection(collectionName).then((collection) => {
+        return collection.update(filter, data, Object.assign({}, { upsert: false }, options));
+      });
     };
-    this.updateOne = async(collectionName, filter, data, options) => {
-      const collection = await this.collection(collectionName);
-      return collection.updateOne(filter, data, Object.assign({}, { upsert: true }, options));
+    this.updateOne = (collectionName, filter, data, options) => {
+      return this.collection(collectionName).then((collection) => {
+        return collection.updateOne(filter, data, Object.assign({}, { upsert: true }, options));
+      });
     };
-    this.remove = async(collectionName, filter, options) => {
-      const collection = await this.collection(collectionName);
-      return collection.deleteMany(filter, options);
+    this.remove = (collectionName, filter, options) => {
+      return this.collection(collectionName).then((collection) => {
+        return collection.deleteMany(filter, options);
+      });
     };
-    this.aggregate = async(collectionName, pipeline, options) => {
-      const collection = await this.collection(collectionName);
-      return new Promise((rec, rej) => {
-        collection.aggregate(pipeline, (err, res) => {
-          if (err) {
-            rej(err);
-          } else {
-            rec(res);
-          }
+    this.aggregate = (collectionName, pipeline, options) => {
+      return this.collection(collectionName).then((collection) => {
+        return new Promise((rec, rej) => {
+          collection.aggregate(pipeline, (err, res) => {
+            if (err) {
+              rej(err);
+            } else {
+              rec(res);
+            }
+          });
         });
       });
     };

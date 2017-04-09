@@ -9,12 +9,6 @@ node mongo library
 $ npm install node.mongo
 ```
 
-## Async support @next
-```
-$ npm install node.mongo@next
-```
-see `last` branch for the `yield` version;
-
 ## Usage
 ```js
 const mongo = require("node.mongo")(url, options);
