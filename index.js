@@ -25,7 +25,8 @@ const mongo = require("mongodb").MongoClient;
         return collection.count(query, options);
       });
     };
-    this.insert = (collectionName, data) => {
+    this.create = this.insert = (collectionName, data) => {
+      data.createTime = data.createTime || new Date();
       return this.collection(collectionName).then((collection) => {
         return collection.insert(data);
       });
@@ -45,11 +46,13 @@ const mongo = require("mongodb").MongoClient;
       });
     };
     this.update = (collectionName, filter, data, options) => {
+      data.lastUpdateTime = data.lastUpdateTime || new Date();
       return this.collection(collectionName).then((collection) => {
         return collection.update(filter, data, Object.assign({}, { upsert: false }, options));
       });
     };
     this.updateOne = (collectionName, filter, data, options) => {
+      data.lastUpdateTime = data.lastUpdateTime || new Date();
       return this.collection(collectionName).then((collection) => {
         return collection.updateOne(filter, data, Object.assign({}, { upsert: true }, options));
       });
@@ -77,5 +80,5 @@ const mongo = require("mongodb").MongoClient;
 
   module.exports = (url, options) => {
     return (new Mongo(url, options));
-  }
+  };
 })();
