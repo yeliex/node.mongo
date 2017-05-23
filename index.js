@@ -12,7 +12,7 @@ const extendUpdate = (data) => {
     lastUpdateTime: true
   }, data.$currentDate || {});
 
-  return data.$currentDate;
+  return data;
 };
 
 const extendCreate = (data) => {
