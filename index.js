@@ -3,6 +3,30 @@
  * Description: 异步转同步mongo连接类
  */
 const mongo = require("mongodb").MongoClient;
+
+const extendUpdate = (data) => {
+  if (data.lastUpdateTime || data.$set.lastUpdateTime) {
+    return data;
+  }
+  data.$currentDate = Object.assign({}, {
+    lastUpdateTime: true
+  }, data.$currentDate || {});
+
+  return data.$currentDate;
+};
+
+const extendCreate = (data) => {
+  if (data instanceof Array) {
+    data = data.map((d) => {
+      d.createTime = d.createTime || new Date();
+      return d;
+    })
+  } else {
+    data.createTime = data.createTime || new Date();
+  }
+  return data;
+};
+
 (() => {
   //constructor cannot be arrow function
   const Mongo = function (url, options) {
@@ -26,9 +50,8 @@ const mongo = require("mongodb").MongoClient;
       });
     };
     this.create = this.insert = (collectionName, data) => {
-      data.createTime = data.createTime || new Date();
       return this.collection(collectionName).then((collection) => {
-        return collection.insert(data);
+        return collection.insert(extendCreate(data));
       });
     };
     this.find = (collectionName, filter, condition, cursor) => {
@@ -46,15 +69,13 @@ const mongo = require("mongodb").MongoClient;
       });
     };
     this.update = (collectionName, filter, data, options) => {
-      data.lastUpdateTime = data.lastUpdateTime || new Date();
       return this.collection(collectionName).then((collection) => {
-        return collection.update(filter, data, Object.assign({}, { upsert: false }, options));
+        return collection.update(filter, extendUpdate(data), Object.assign({}, { upsert: false }, options));
       });
     };
     this.updateOne = (collectionName, filter, data, options) => {
-      data.lastUpdateTime = data.lastUpdateTime || new Date();
       return this.collection(collectionName).then((collection) => {
-        return collection.updateOne(filter, data, Object.assign({}, { upsert: true }, options));
+        return collection.updateOne(filter, extendUpdate(data), Object.assign({}, { upsert: true }, options));
       });
     };
     this.remove = (collectionName, filter, options) => {
