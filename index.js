@@ -5,7 +5,7 @@
 const mongo = require("mongodb").MongoClient;
 
 const extendUpdate = (data) => {
-  if (data.lastUpdateTime || !data.$set || (data.$set && data.$set.lastUpdateTime)) {
+  if (!data.$set) {
     return data;
   }
   data.$currentDate = Object.assign({}, {
