@@ -31,10 +31,12 @@ const extend = {
 
 (() => {
   //constructor cannot be arrow function
-  const Mongo = function (url, { timestamp = true, updatedTime, createdTime, ...options }) {
+  const Mongo = function (url, options) {
     // 首先建立连接
     options = options || {};
     options.autoReconnect = true;
+
+    const { timestamp = true, updatedTime, createdTime } = options;
 
     const extendUpdate = options.timestamp ? extend.update(updatedTime) : extend.no;
     const extendCreate = options.timestamp ? extend.create(createdTime) : extend.no;
