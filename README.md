@@ -11,7 +11,11 @@ $ npm install node.mongo
 
 ## Usage
 ```js
-const mongo = require("node.mongo")(url, options);
+const mongo = require("node.mongo")(url, {
+  timestamp: true, // auto add createdTime and updatedTime 
+  createdTime: 'createdTime', // customer createdTime field (timestamp=true)
+  updatedTime: 'updatedTime' // customer createdTime field (timestamp=true)
+});
 
 const res = await mongo.findOne(collection,condition);
 ```
