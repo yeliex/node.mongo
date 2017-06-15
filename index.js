@@ -4,27 +4,28 @@
  */
 const mongo = require("mongodb").MongoClient;
 
-const extendUpdate = (data) => {
-  if (!data.$set) {
+const extend = {
+  update: (key = 'updatedTime') => (data) => {
+    if (!data.$set) {
+      return data;
+    }
+    data.$currentDate = Object.assign({}, {
+      [key]: true
+    }, data.$currentDate || {});
+
+    return data;
+  },
+  create: (key = 'createdTime') => (data,) => {
+    if (data instanceof Array) {
+      data = data.map((d) => {
+        d[key] = d[key] || new Date();
+        return d;
+      })
+    } else {
+      data[key] = data[key] || new Date();
+    }
     return data;
   }
-  data.$currentDate = Object.assign({}, {
-    lastUpdateTime: true
-  }, data.$currentDate || {});
-
-  return data;
-};
-
-const extendCreate = (data) => {
-  if (data instanceof Array) {
-    data = data.map((d) => {
-      d.createTime = d.createTime || new Date();
-      return d;
-    })
-  } else {
-    data.createTime = data.createTime || new Date();
-  }
-  return data;
 };
 
 (() => {
@@ -33,7 +34,12 @@ const extendCreate = (data) => {
     // 首先建立连接
     options = options || {};
     options.autoReconnect = true;
+
+    const extendUpdate = extend.update(options.updateTime);
+    const extendCreate = extend.create(options.createTime);
+
     const connect = mongo.connect(url, options);
+
     this.collections = () => {
       return connect.then((db) => {
         return db.collections();
