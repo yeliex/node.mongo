@@ -5,6 +5,7 @@
 const mongo = require("mongodb").MongoClient;
 
 const extend = {
+  no: () => data => data,
   update: (key = 'updatedTime') => (data) => {
     if (!data.$set) {
       return data;
@@ -30,13 +31,13 @@ const extend = {
 
 (() => {
   //constructor cannot be arrow function
-  const Mongo = function (url, options) {
+  const Mongo = function (url, { timestamp = true, updatedTime, createdTime, ...options }) {
     // 首先建立连接
     options = options || {};
     options.autoReconnect = true;
 
-    const extendUpdate = extend.update(options.updateTime);
-    const extendCreate = extend.create(options.createTime);
+    const extendUpdate = options.timestamp ? extend.update(updatedTime) : extend.no;
+    const extendCreate = options.timestamp ? extend.create(createdTime) : extend.no;
 
     const connect = mongo.connect(url, options);
 
