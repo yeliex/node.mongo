@@ -38,8 +38,8 @@ const extend = {
 
     const { timestamp = true, updatedTime, createdTime } = options;
 
-    const extendUpdate = options.timestamp ? extend.update(updatedTime) : extend.no;
-    const extendCreate = options.timestamp ? extend.create(createdTime) : extend.no;
+    const extendUpdate = timestamp ? extend.update(updatedTime) : extend.no();
+    const extendCreate = timestamp ? extend.create(createdTime) : extend.no();
 
     const connect = mongo.connect(url, options);
 
