@@ -14,6 +14,8 @@ const extend = {
       [key]: true
     }, data.$currentDate || {});
 
+    delete data.$set[key];
+
     return data;
   },
   create: (key = 'createdTime') => (data,) => {
