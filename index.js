@@ -7,7 +7,7 @@ const mongo = require("mongodb").MongoClient;
 const extend = {
   no: () => data => data,
   update: (key = 'updatedTime') => (data) => {
-    if (!data.$set) {
+    if (!data || !data.$set) {
       return data;
     }
     data.$currentDate = Object.assign({}, {
@@ -19,6 +19,9 @@ const extend = {
     return data;
   },
   create: (key = 'createdTime') => (data) => {
+    if (!data) {
+      return data;
+    }
     if (data instanceof Array) {
       data = data.map((d) => {
         d[key] = d[key] || new Date();
