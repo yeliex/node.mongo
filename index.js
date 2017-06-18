@@ -18,7 +18,7 @@ const extend = {
 
     return data;
   },
-  create: (key = 'createdTime') => (data,) => {
+  create: (key = 'createdTime') => (data) => {
     if (data instanceof Array) {
       data = data.map((d) => {
         d[key] = d[key] || new Date();
