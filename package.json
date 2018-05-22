@@ -25,6 +25,6 @@
   },
   "homepage": "https://github.com/yeliex/node.mongo#readme",
   "dependencies": {
-    "mongodb": "^2.2.12"
+    "mongodb": "^3.0.8"
   }
 }
