@@ -1,5 +1,7 @@
 # node.mongo
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/yeliex/node.mongo.svg)](https://greenkeeper.io/)
+
 [![npm](https://img.shields.io/npm/v/node.mongo.svg?style=flat-square)](https://www.npmjs.com/package/node.mongo)
 
 node mongo library
